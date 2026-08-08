@@ -5,30 +5,11 @@ import CategoryLayout from '../layouts/CategoryLayout.astro';
 import '../styles/global.css'
 ---
 
-<script>
-import { gsap } from "gsap";
-
-const box = document.getElementById("box");
-const myTimeline = gsap.timeline();
-
-myTimeline
-    // .from(box, {
-    //     opacity: 0,
-	// 	duration: 0.1,
-    // })
-    .to(box, {
-        opacity: 1,
-        duration: 4,
-    })
-</script>
-
-<BaseLayout pageTitle="Index">
+<BaseLayout pageTitle="Music">
 	<CategoryLayout>
-        <h1>HI!!!</h1>
-    </CategoryLayout>
-
-	<div id="box" class="bg-amber-300 p-6 opacity-0"></div>
-    <h1>HI!!!</h1>
+		<h1 class="text-8xl m-8">Music</h1>
+	</CategoryLayout>
+	<h1>HI!!!</h1>
     <h1>HI!!!</h1>
     <h1>HI!!!</h1>
     <h1>HI!!!</h1>

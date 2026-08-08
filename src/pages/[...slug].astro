@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import { collections } from '../content.config';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
   const collectionNames = Object.keys(collections) as Array<keyof typeof collections>;
@@ -23,7 +23,7 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<Layout title={entry.data.title}>
+<BaseLayout title={entry.data.title}>
   <h1>{entry.data.title}</h1>
   <Content />
-</Layout>
+</BaseLayout>

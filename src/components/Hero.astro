@@ -1,0 +1,44 @@
+---
+import '../styles/global.css'
+---
+
+<script>
+    import { navigate } from 'astro:transitions/client';
+
+    const pageOrder = [
+        "/",
+        "/videogames",
+        "/music",
+        "/code",
+        "/art",
+        "/texts",
+    ];
+
+    function left() {
+        console.log("left")
+        const currentPath = window.location.pathname;
+		const currentIndex = pageOrder.indexOf(currentPath);
+
+        navigate(pageOrder[currentIndex - 1])
+    }
+
+    function right() {
+        const currentPath = window.location.pathname;
+		const currentIndex = pageOrder.indexOf(currentPath);
+
+        navigate(pageOrder[currentIndex + 1])
+    }
+
+    document.addEventListener("astro:page-load", () => {
+        document.getElementById("btn-left")?.addEventListener("click", left)
+        document.getElementById("btn-right")?.addEventListener("click", right)
+    })
+</script>
+
+<div transition:animate="fade" class="h-screen flex flex-col justify-center items-center">
+    <h1 class="text-8xl">Creative Space</h1>
+    <div class="flex">
+        <div id="btn-left">LEFT</div>
+        <div id="btn-right">RIGHT</div>
+    </div>
+</div>

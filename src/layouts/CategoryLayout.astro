@@ -1,0 +1,78 @@
+---
+import Hero from "../components/Hero.astro";
+import "../styles/global.css";
+---
+
+<script>
+	const scrollLimit = 300;
+
+	document.addEventListener("astro:page-load", () => {
+		function headerVisibility() {
+			if (window.scrollY > scrollLimit) {
+				header?.classList.remove("-translate-y-20");
+			} else {
+				header?.classList.add("-translate-y-20");
+			}
+		}
+
+		const header = document.querySelector("header");
+		headerVisibility()
+		
+		window.addEventListener("scroll", () => {
+			headerVisibility()
+		});
+	});
+
+	document.addEventListener("astro:before-preparation", (event) => {
+		const pageOrder = [
+			"/",
+			"/videogames",
+			"/music",
+			"/code",
+			"/art",
+			"/texts",
+		];
+
+		const currentPath = event.from.pathname;
+		const nextPath = event.to.pathname;
+
+		const currentIndex = pageOrder.indexOf(currentPath);
+		const nextIndex = pageOrder.indexOf(nextPath);
+
+		if (nextIndex > currentIndex) {
+			event.direction = "forward";
+		} else {
+			event.direction = "back";
+		}
+	});
+</script>
+
+<script is:inline>
+	let scrollY = 0;
+
+	document.addEventListener("astro:after-preparation", () => {
+		scrollY = window.scrollY;
+	});
+
+	document.addEventListener("astro:after-swap", () => {
+		window.scrollTo(0, scrollY);
+	});
+</script>
+
+<header
+	transition:animate="none"
+	class="bg-amber-200 p-4 transition-transform fixed w-full z-999 -translate-y-20"
+>
+	<div class="flex justify-around items-center">
+		<a href="/">About</a>
+		<a href="/videogames">Games</a>
+		<a href="/music">Music</a>
+		<a href="/code">Code</a>
+		<a href="/art">Art</a>
+		<a href="/texts">Texts</a>
+	</div>
+</header>
+<body transition:animate="slide">
+	<Hero />
+	<slot />
+</body>
