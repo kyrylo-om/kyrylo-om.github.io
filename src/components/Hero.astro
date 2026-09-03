@@ -9,11 +9,11 @@ const { category } = Astro.props as {
 
 const pages = {
 	"default": { path: "/", color: "bg-yellow-500/30" },
-	"games": { path: "/videogames", color: "bg-orange-500/30" },
-	"music": { path: "/music", color: "bg-purple-500/30" },
-	"code": { path: "/code", color: "bg-green-500/30" },
-	"art": { path: "/art", color: "bg-cyan-500/30" },
-	"texts": { path: "/texts", color: "bg-amber-900/30" },
+	"games": { path: "/videogames/", color: "bg-orange-500/30" },
+	"music": { path: "/music/", color: "bg-purple-500/30" },
+	"code": { path: "/code/", color: "bg-green-500/30" },
+	"art": { path: "/art/", color: "bg-cyan-500/30" },
+	"texts": { path: "/texts/", color: "bg-amber-900/30" },
 } as const;
 
 const page = pages[category];
@@ -25,16 +25,15 @@ const bg = await getImage({ src: bgsrc });
 
 	const pageOrder = [
         "/",
-        "/videogames",
-        "/music",
-        "/code",
-        "/art",
-        "/texts",
+        "/videogames/",
+        "/music/",
+        "/code/",
+        "/art/",
+        "/texts/",
     ];
 	
 	document.addEventListener("astro:page-load", () => {
 		const currentPath = window.location.pathname;
-		console.log(currentPath)
 		const currentIndex = pageOrder.indexOf(currentPath);
 
 		function right() {
