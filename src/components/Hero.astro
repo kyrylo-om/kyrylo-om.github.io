@@ -34,6 +34,7 @@ const bg = await getImage({ src: bgsrc });
 	
 	document.addEventListener("astro:page-load", () => {
 		const currentPath = window.location.pathname;
+		console.log(currentPath)
 		const currentIndex = pageOrder.indexOf(currentPath);
 
 		function right() {
