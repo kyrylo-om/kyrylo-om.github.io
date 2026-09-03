@@ -86,8 +86,12 @@ const bg = await getImage({ src: bgsrc });
 				<slot name="button" />
 			</div>
 			<div class="flex items-center justify-center gap-3" transition:animate="none">
-				<div id="btn-left" class="rounded-2xl p-2 flex items-center cursor-pointer hover:bg-white/20">
-					<p class="text-3xl sm:text-5xl text-black/40">🞀</p>
+				<div id="btn-left" class="p-1 flex items-center cursor-pointer">
+					<p class="text-2xl sm:text-4xl text-black/40 hover:text-black/60">
+						<svg viewBox="0 0 24 24" class="size-[1em]" fill="currentColor" aria-hidden="true">
+							<path d="M18.5 3.5c1.2-.9 2.9 0 2.9 1.5v14c0 1.5-1.7 2.4-2.9 1.5l-10-7c-1-.7-1-2.3 0-3l10-7Z" />
+						</svg>
+					</p>
 				</div>
 				{Object.entries(pages).map(([dotCategory, { path }]) => {
 					const isCurrent = path === Astro.url.pathname;
@@ -98,7 +102,7 @@ const bg = await getImage({ src: bgsrc });
 							class:list={[
 								"category-dot",
 								"rounded-full border border-black/20 transition-all duration-200 hover:scale-110 hover:bg-black/40 focus:outline-none focus:ring-2 focus:ring-black/30",
-								isCurrent ? "w-4 h-4 bg-black/80 shadow-md" : "w-3 h-3 bg-black/30",
+								isCurrent ? "size-3 sm:size-4 bg-black/80 shadow-md" : "size-2 sm:size-3 bg-black/30",
 							]}
 							data-path={path}
 							aria-label={`Go to ${dotCategory === "default" ? "home" : dotCategory} page`}
@@ -106,8 +110,12 @@ const bg = await getImage({ src: bgsrc });
 						/>
 					);
 				})}
-				<div id="btn-right" class="rounded-2xl p-2 flex items-center cursor-pointer hover:bg-white/20">
-					<p class="text-3xl sm:text-5xl text-black/40">🞂</p>
+				<div id="btn-right" class="rounded-2xl p-1 flex items-center cursor-pointer">
+					<p class="text-2xl sm:text-4xl text-black/40 hover:text-black/60">
+						<svg viewBox="0 0 24 24" class="size-[1em]" fill="currentColor" aria-hidden="true">
+							<path d="M5.5 3.5c-1.2-.9-2.9 0-2.9 1.5v14c0 1.5 1.7 2.4 2.9 1.5l10-7c1-.7 1-2.3 0-3l-10-7Z" />
+						</svg>
+					</p>
 				</div>
 			</div>
 		</div>

@@ -63,55 +63,57 @@ const audioSrc = data.audio;
 		return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 	};
 
-	document
-		.querySelectorAll<HTMLElement>(".audio-player")
-		.forEach((container) => {
-			const waveContainer = container.querySelector<HTMLElement>(
-				".waveform-container",
-			);
-			const playBtn =
-				container.querySelector<HTMLButtonElement>(".play-btn");
-			const playIcon = container.querySelector<SVGElement>(".play-icon");
-			const pauseIcon =
-				container.querySelector<SVGElement>(".pause-icon");
-			const timeDisplay =
-				container.querySelector<HTMLElement>(".time-display");
-			const audioUrl = container.dataset.url;
+    document.addEventListener("astro:page-load", () => {
+        document
+            .querySelectorAll<HTMLElement>(".audio-player")
+            .forEach((container) => {
+                const waveContainer = container.querySelector<HTMLElement>(
+                    ".waveform-container",
+                );
+                const playBtn =
+                    container.querySelector<HTMLButtonElement>(".play-btn");
+                const playIcon = container.querySelector<SVGElement>(".play-icon");
+                const pauseIcon =
+                    container.querySelector<SVGElement>(".pause-icon");
+                const timeDisplay =
+                    container.querySelector<HTMLElement>(".time-display");
+                const audioUrl = container.dataset.url;
 
-			if (!waveContainer || !playBtn || !audioUrl) return;
+                if (!waveContainer || !playBtn || !audioUrl) return;
 
-			const ws = WaveSurfer.create({
-				container: waveContainer,
-				waveColor: "#4b5563",
-				progressColor: "#6366f1",
-				cursorColor: "#818cf8",
-				cursorWidth: 2,
-				height: 50,
-				barWidth: 3,
-				barGap: 3,
-				barRadius: 3,
-				url: audioUrl,
-			});
+                const ws = WaveSurfer.create({
+                    container: waveContainer,
+                    waveColor: "#4b5563",
+                    progressColor: "#6366f1",
+                    cursorColor: "#818cf8",
+                    cursorWidth: 2,
+                    height: 50,
+                    barWidth: 3,
+                    barGap: 3,
+                    barRadius: 3,
+                    url: audioUrl,
+                });
 
-			const updatePlayState = (isPlaying: boolean) => {
-				playIcon?.classList.toggle("hidden", isPlaying);
-				pauseIcon?.classList.toggle("hidden", !isPlaying);
-			};
+                const updatePlayState = (isPlaying: boolean) => {
+                    playIcon?.classList.toggle("hidden", isPlaying);
+                    pauseIcon?.classList.toggle("hidden", !isPlaying);
+                };
 
-			playBtn.addEventListener("click", () => ws.playPause());
-			ws.on("play", () => updatePlayState(true));
-			ws.on("pause", () => updatePlayState(false));
-			ws.on("finish", () => updatePlayState(false));
+                playBtn.addEventListener("click", () => ws.playPause());
+                ws.on("play", () => updatePlayState(true));
+                ws.on("pause", () => updatePlayState(false));
+                ws.on("finish", () => updatePlayState(false));
 
-			ws.on("ready", (duration) => {
-				if (timeDisplay)
-					timeDisplay.textContent = `0:00 / ${formatTime(duration)}`;
-			});
+                ws.on("ready", (duration) => {
+                    if (timeDisplay)
+                        timeDisplay.textContent = `0:00 / ${formatTime(duration)}`;
+                });
 
-			ws.on("timeupdate", (currentTime) => {
-				const duration = ws.getDuration() || 0;
-				if (timeDisplay)
-					timeDisplay.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
-			});
-		});
+                ws.on("timeupdate", (currentTime) => {
+                    const duration = ws.getDuration() || 0;
+                    if (timeDisplay)
+                        timeDisplay.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+                });
+            });
+        })
 </script>
