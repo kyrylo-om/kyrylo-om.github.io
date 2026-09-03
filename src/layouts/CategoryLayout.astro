@@ -78,9 +78,9 @@ const page = pages[category];
 
 <header
 	transition:animate="none"
-	class=`p-4 py-10 ${page.color} border-2 border-black transition-transform fixed w-full z-999`
+	class=`p-4 py-8 sm:py-10 ${page.color} border-2 border-black transition-transform fixed w-full z-999`
 >
-	<div class="flex justify-around items-center text-2xl font-black">
+	<div class="flex flex-wrap justify-around items-center gap-x-2 sm:gap-x-0 text-base sm:text-2xl font-black">
 		<a href="/">Creative Space</a>
 		<a href="/videogames">Games</a>
 		<a href="/music">Music</a>
@@ -96,11 +96,11 @@ const page = pages[category];
 		class="flex flex-col items-center"
 	>
 		<div transition:animate="none"
-			class="z-1 bg-white min-h-screen border-8 border-dashed border-black/80 flex flex-col items-center px-80 py-40 bg-[radial-gradient(#e5e7eb_2px,transparent_2px)] bg-size-[30px_30px] w-[95vw] rounded-[100px]"
+			class="z-1 bg-white min-h-screen border-8 border-dashed border-black/80 flex flex-col items-center px-6 py-16 sm:px-80 sm:py-40 bg-[radial-gradient(#e5e7eb_2px,transparent_2px)] bg-size-[30px_30px] w-[98vw] sm:w-[95vw] rounded-[40px] sm:rounded-[100px]"
 		>
 		<div class="w-full" transition:animate="slide" transition:name="content1">
 			<div
-				class="text-8xl text-center pb-20 font-bold w-full"
+				class="text-4xl sm:text-8xl text-center pb-10 sm:pb-20 font-bold w-full"
 			>
 				<slot name="title" />
 			</div>

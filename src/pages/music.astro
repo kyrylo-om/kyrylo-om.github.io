@@ -19,7 +19,7 @@ const posts = await getCollection('music');
         </Hero>
 		<p slot="title">Music</p>
         <div slot="content">
-            <div class="grid grid-cols-[repeat(auto-fill,minmax(45%,1fr))] gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {posts.map((post) => (
                 <MusicCard data={post.data}>
                     <p slot="title">{post.data.title}</p>
