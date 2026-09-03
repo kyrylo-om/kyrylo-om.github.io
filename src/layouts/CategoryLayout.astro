@@ -1,7 +1,24 @@
 ---
 import Hero from "../components/Hero.astro";
 import "../styles/global.css";
+const { category } = Astro.props as {
+	category: "default" | "games" | "music" | "code" | "art" | "texts";
+};
+import { Font } from "astro:assets";
+
+const pages = {
+	default: { path: "/", color: "bg-yellow-100" },
+	games: { path: "/videogames", color: "bg-orange-100" },
+	music: { path: "/music", color: "bg-purple-100" },
+	code: { path: "/code", color: "bg-green-100" },
+	art: { path: "/art", color: "bg-cyan-100" },
+	texts: { path: "/texts", color: "bg-amber-800" },
+} as const;
+
+const page = pages[category];
 ---
+
+<Font cssVariable=`--font-${category ? category : "default"}` />
 
 <script>
 	const scrollLimit = 300;
@@ -9,17 +26,17 @@ import "../styles/global.css";
 	document.addEventListener("astro:page-load", () => {
 		function headerVisibility() {
 			if (window.scrollY > scrollLimit) {
-				header?.classList.remove("-translate-y-20");
+				header?.classList.remove("-translate-y-50");
 			} else {
-				header?.classList.add("-translate-y-20");
+				// header?.classList.add("-translate-y-50");
 			}
 		}
 
 		const header = document.querySelector("header");
-		headerVisibility()
-		
+		headerVisibility();
+
 		window.addEventListener("scroll", () => {
-			headerVisibility()
+			headerVisibility();
 		});
 	});
 
@@ -61,10 +78,10 @@ import "../styles/global.css";
 
 <header
 	transition:animate="none"
-	class="bg-amber-200 p-4 transition-transform fixed w-full z-999 -translate-y-20"
+	class=`p-4 py-10 ${page.color} border-2 border-black transition-transform fixed w-full z-999`
 >
-	<div class="flex justify-around items-center">
-		<a href="/">About</a>
+	<div class="flex justify-around items-center text-2xl font-black">
+		<a href="/">Creative Space</a>
 		<a href="/videogames">Games</a>
 		<a href="/music">Music</a>
 		<a href="/code">Code</a>
@@ -72,7 +89,23 @@ import "../styles/global.css";
 		<a href="/texts">Texts</a>
 	</div>
 </header>
-<body transition:animate="slide">
-	<Hero />
-	<slot />
+<body>
+	<slot name="hero" />
+	<div class="h-screen"></div>
+	<div
+		class="flex flex-col items-center"
+	>
+		<div transition:animate="none"
+			class="z-1 bg-white min-h-screen border-8 border-dashed border-black/80 flex flex-col items-center px-80 py-40 bg-[radial-gradient(#e5e7eb_2px,transparent_2px)] bg-size-[30px_30px] w-[95vw] rounded-[100px]"
+		>
+		<div class="w-full" transition:animate="slide" transition:name="content1">
+			<div
+				class="text-8xl text-center pb-20 font-bold w-full"
+			>
+				<slot name="title" />
+			</div>
+			<slot name="content" />
+		</div>
+		</div>
+	</div>
 </body>

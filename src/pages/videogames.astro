@@ -1,28 +1,31 @@
 ---
+import Hero from '../components/Hero.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CategoryLayout from '../layouts/CategoryLayout.astro';
+import GameCard from '../components/GameCard.astro'
 
 import '../styles/global.css'
+
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('games');
 ---
 
 <BaseLayout pageTitle="Videogames">
-	<CategoryLayout>
-		<h1 class="text-8xl m-8">Videogames</h1>
+	<CategoryLayout category="games">
+        <Hero slot="hero" category="games">
+            <p slot="subtitle">I love creating videogames!</p>
+            <p slot="button">Show me!!</p>
+        </Hero>
+		<p slot="title">Videogames</p>
+        <div slot="content">
+            <div class="grid grid-cols-[repeat(auto-fill,minmax(30%,1fr))] gap-6">
+                {posts.map((post) => (
+                <GameCard data={post.data}>
+                    <p slot="title">{post.data.title}</p>
+                </GameCard>
+                ))}
+            </div>
+        </div>
 	</CategoryLayout>
-	<h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
 </BaseLayout>

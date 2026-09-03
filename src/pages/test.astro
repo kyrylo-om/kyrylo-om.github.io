@@ -1,0 +1,84 @@
+---
+import '../styles/global.css'
+---
+
+<div class="w-full">
+  <!-- Top Section -->
+  <section class="h-screen bg-black flex items-center justify-center">
+    <h1 class="text-10xl font-bold">Scroll down to see the GSAP effect</h1>
+  </section>
+
+  <!-- The Trigger Wrapper -->
+  <div id="scroll-section" class="relative flex w-full h-screen bg-black overflow-hidden">
+    
+    <!-- Left Side: Fixed Background -->
+    <div class="w-1/2 h-screen bg-neutral-900 flex items-center justify-center text-white">
+      <div class="p-8">
+        <h2 class="text-4xl font-extrabold">GSAP Pinned</h2>
+        <p class="text-neutral-400 mt-2">Controlled by ScrollTrigger.</p>
+      </div>
+    </div>
+
+    <!-- Right Side: The Mask Viewport -->
+    <div class="w-1/2 h-screen overflow-hidden bg-slate-200 relative">
+      
+      <!-- The Scrolling Child Content -->
+      <div id="scrolling-content" class="absolute top-0 left-0 w-full flex flex-col">
+        <!-- Panel 1 -->
+        <div class="h-screen w-full flex flex-col justify-center p-12 bg-blue-500 text-white">
+          <h3 class="text-5xl font-bold">First Panel</h3>
+          <p class="mt-4 text-blue-100">GSAP just pinned the viewport.</p>
+        </div>
+        <!-- Panel 2 -->
+        <div class="h-screen w-full flex flex-col justify-center p-12 bg-emerald-500 text-white">
+          <h3 class="text-5xl font-bold">Second Panel</h3>
+          <p class="mt-4 text-emerald-100">Smooth scrolling animation.</p>
+        </div>
+        <!-- Panel 3 -->
+        <div class="h-screen w-full flex flex-col justify-center p-12 bg-purple-500 text-white">
+          <h3 class="text-5xl font-bold">Third Panel</h3>
+          <p class="mt-4 text-purple-100">End of the GSAP track.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom Section -->
+  <section class="h-screen bg-slate-800 flex items-center justify-center text-white">
+    <h1 class="text-3xl font-bold">GSAP unpinned, normal scroll resumes</h1>
+  </section>
+</div>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  // Register the ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+
+  const triggerElement = document.querySelector("#scroll-section");
+  const scrollContent = document.querySelector("#scrolling-content");
+
+  if (triggerElement && scrollContent) {
+    // Total number of panels on the right side
+    const totalPanels = scrollContent.children.length;
+    
+    // Calculate how much we need to slide up
+    // To show the last panel, we move up by (totalPanels - 1) * 100vh
+    const yTranslate = -(totalPanels - 1) * 100;
+
+    gsap.to(scrollContent, {
+      yPercent: yTranslate,
+      ease: "none", // Crucial for a standard 1:1 scroll feeling
+      scrollTrigger: {
+        trigger: triggerElement,
+        start: "top top",         // Starts when the top of container hits top of viewport
+        end: `+=${totalPanels * 100}%`, // Length of the scroll effect based on panel count
+        scrub: true,              // Links animation directly to scrollbar position
+        pin: true,                // Pins the entire layout container in place
+        invalidateOnRefresh: true // Keeps calculations accurate on screen resize
+      }
+    });
+  }
+</script>

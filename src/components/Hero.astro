@@ -1,11 +1,29 @@
 ---
-import '../styles/global.css'
+import "../styles/global.css";
+import { getImage } from "astro:assets";
+import bgsrc from "../assets/images/background.png";
+
+const { category } = Astro.props as {
+	category: "default" | "games" | "music" | "code" | "art" | "texts";
+};
+
+const pages = {
+	"default": { path: "/", color: "bg-yellow-500/30" },
+	"games": { path: "/videogames", color: "bg-orange-500/30" },
+	"music": { path: "/music", color: "bg-purple-500/30" },
+	"code": { path: "/code", color: "bg-green-500/30" },
+	"art": { path: "/art", color: "bg-cyan-500/30" },
+	"texts": { path: "/texts", color: "bg-amber-900/30" },
+} as const;
+
+const page = pages[category];
+const bg = await getImage({ src: bgsrc });
 ---
 
 <script>
-    import { navigate } from 'astro:transitions/client';
+	import { navigate } from "astro:transitions/client";
 
-    const pageOrder = [
+	const pageOrder = [
         "/",
         "/videogames",
         "/music",
@@ -13,32 +31,85 @@ import '../styles/global.css'
         "/art",
         "/texts",
     ];
-
-    function left() {
-        console.log("left")
-        const currentPath = window.location.pathname;
+	
+	document.addEventListener("astro:page-load", () => {
+		const currentPath = window.location.pathname;
 		const currentIndex = pageOrder.indexOf(currentPath);
 
-        navigate(pageOrder[currentIndex - 1])
-    }
+		function right() {
+			if (currentIndex < pageOrder.length - 1) {
+				navigate(pageOrder[currentIndex + 1]);
+			}
+			else {
+				navigate(pageOrder[0]);
+			}
+		}
 
-    function right() {
-        const currentPath = window.location.pathname;
-		const currentIndex = pageOrder.indexOf(currentPath);
+		function left() {
+			if (currentIndex > 0) {
+				navigate(pageOrder[currentIndex - 1]);
+			}
+			else {
+				navigate(pageOrder[pageOrder.length - 1]);
+			}
+		}
+		document.getElementById("btn-left")?.addEventListener("click", left);
+		document.getElementById("btn-right")?.addEventListener("click", right);
+		document.getElementById("scroll-down")?.addEventListener("click", () => {
+			window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
+		});
 
-        navigate(pageOrder[currentIndex + 1])
-    }
-
-    document.addEventListener("astro:page-load", () => {
-        document.getElementById("btn-left")?.addEventListener("click", left)
-        document.getElementById("btn-right")?.addEventListener("click", right)
-    })
+		document.querySelectorAll(".category-dot").forEach((dot) => {
+			dot.addEventListener("click", () => {
+				const target = dot.getAttribute("data-path");
+				if (target) {
+					navigate(target);
+				}
+			});
+		});
+	});
 </script>
 
-<div transition:animate="fade" class="h-screen flex flex-col justify-center items-center">
-    <h1 class="text-8xl">Creative Space</h1>
-    <div class="flex">
-        <div id="btn-left">LEFT</div>
-        <div id="btn-right">RIGHT</div>
-    </div>
+<div
+	transition:animate="fade" transition:name="hero"
+	class=`h-screen w-screen flex flex-col justify-center items-center ${page.color} fixed`
+>
+	<div transition:animate="slide" transition:name="hero2" class="min-w-[70vw] min-h-[70vh] flex flex-row items-stretch justify-between bg-white/15 rounded-2xl p-6">
+		<div id="btn-left" class="rounded-2xl p-8 flex items-center cursor-pointer my-8 hover:bg-white/20">
+			<p class="text-6xl text-black/60">⟨</p>
+		</div>
+		<div class="flex flex-col justify-center items-center">
+			<h1 transition:animate="fade" transition:name="hero3" class="text-8xl m-4 text-shadow-black/20 text-shadow-lg" style=`font-family: var(--font-${category});`>
+				Creative Space
+			</h1>
+			<div class="text-4xl">
+				<slot name="subtitle" />
+			</div>
+			<div id="scroll-down" class="p-4 px-20 m-4 cursor-pointer rounded-2xl text-2xl outline-2 outline-black/50 hover:bg-black/3">
+				<slot name="button" />
+			</div>
+			<div class="mt-3 flex items-center justify-center gap-3">
+				{Object.entries(pages).map(([dotCategory, { path }]) => {
+					const isCurrent = path === Astro.url.pathname;
+
+					return (
+						<button
+							type="button"
+							class:list={[
+								"category-dot",
+								"rounded-full border border-black/20 transition-all duration-200 hover:scale-110 hover:bg-black/40 focus:outline-none focus:ring-2 focus:ring-black/30",
+								isCurrent ? "w-4 h-4 bg-black/80 shadow-md" : "w-3 h-3 bg-black/30",
+							]}
+							data-path={path}
+							aria-label={`Go to ${dotCategory === "default" ? "home" : dotCategory} page`}
+							title={dotCategory === "default" ? "Home" : dotCategory}
+						/>
+					);
+				})}
+			</div>
+		</div>
+		<div id="btn-right" class="rounded-2xl p-8 flex items-center cursor-pointer my-8 hover:bg-white/20">
+			<p class="text-6xl text-black/60">⟩</p>
+		</div>
+	</div>
 </div>

@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+/* ::view-transition-group(*) {
+    z-index: 1;
+    } */
+    
+::view-transition-group(root) {
+    z-index: 0;
+}
+
+::view-transition-group(hero) {
+    z-index: 1;
+}
+::view-transition-group(hero2) {
+    z-index: 1;
+}
+::view-transition-group(hero3) {
+    z-index: 1;
+}
+
+::view-transition-group(*) {
+    z-index: 100;
+}

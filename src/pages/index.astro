@@ -1,4 +1,5 @@
 ---
+import Hero from '../components/Hero.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CategoryLayout from '../layouts/CategoryLayout.astro';
 
@@ -23,25 +24,14 @@ myTimeline
 </script>
 
 <BaseLayout pageTitle="Index">
-	<CategoryLayout>
-        <h1>HI!!!</h1>
+	<CategoryLayout category="default">
+        <Hero slot="hero" category="default">
+            <p slot="subtitle">So, uh... I like a lot of things.</p>
+            <p slot="button">Hi there!</p>
+        </Hero>
+        <p slot="title">Hello.</p>
+        <div slot="content" class="flex flex-col items-center">
+            Work in progress
+        </div>
     </CategoryLayout>
-
-	<div id="box" class="bg-amber-300 p-6 opacity-0"></div>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
-    <h1>HI!!!</h1>
 </BaseLayout>

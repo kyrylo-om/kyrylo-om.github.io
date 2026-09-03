@@ -1,13 +1,19 @@
 ---
+import Hero from '../components/Hero.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CategoryLayout from '../layouts/CategoryLayout.astro';
+
 
 import '../styles/global.css'
 ---
 
-<BaseLayout pageTitle="Videogames">
-	<CategoryLayout>
-		<h1 class="text-8xl m-8">Code</h1>
+<BaseLayout pageTitle="Programming">
+	<CategoryLayout category="code">
+        <Hero slot="hero" category="code">
+            <p slot="subtitle">I like programming different things.</p>
+            <p slot="button">What things?</p>
+        </Hero>
+		<p slot="title">Code</p>
 	</CategoryLayout>
 	<h1>HI!!!</h1>
     <h1>HI!!!</h1>
