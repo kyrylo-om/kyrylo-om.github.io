@@ -1,7 +1,7 @@
 ---
 title: "Pink Rhino"
-thumbnail: "../images/idiot.jpg"
-audio: "sounds/rhino.mp3"
+thumbnail: "../../assets/images/idiot.jpg"
+audio: "/sounds/rhino.mp3"
 ---
 
 # Post

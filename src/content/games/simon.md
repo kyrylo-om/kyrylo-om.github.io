@@ -1,6 +1,6 @@
 ---
 title: "Simon's Gazlighting Simulator"
-thumbnail: "../images/simon.jpg"
+thumbnail: "../../assets/images/simon.jpg"
 url: "https://dogmakerr.itch.io/simons-gaslighting-simulator"
 ---
 
