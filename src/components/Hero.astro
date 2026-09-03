@@ -72,12 +72,9 @@ const bg = await getImage({ src: bgsrc });
 
 <div
 	transition:animate="fade" transition:name="hero"
-	class=`h-screen w-screen flex flex-col justify-center items-center ${page.color} fixed`
+	class=`h-lvh w-screen flex flex-col justify-center items-center ${page.color} fixed`
 >
-	<div transition:animate="slide" transition:name="hero2" class="min-w-[88vw] sm:min-w-[70vw] min-h-[70vh] flex flex-row items-stretch justify-between bg-white/15 rounded-2xl p-2 sm:p-6">
-		<div id="btn-left" class="rounded-2xl p-2 sm:p-4 flex items-center cursor-pointer my-8 hover:bg-white/20">
-			<p class="text-3xl sm:text-6xl text-black/60">⟨</p>
-		</div>
+	<div transition:animate="slide" transition:name="hero2" class="min-w-[88vw] sm:min-w-[70vw] min-h-[70vh] flex flex-row items-stretch justify-center bg-white/15 rounded-2xl p-2 sm:p-6">
 		<div class="flex flex-col justify-center items-center">
 			<h1 transition:animate="fade" transition:name="hero3" class="text-center text-6xl sm:text-8xl m-2 sm:m-4 text-shadow-black/20 text-shadow-lg" style=`font-family: var(--font-${category});`>
 				Creative Space
@@ -88,7 +85,10 @@ const bg = await getImage({ src: bgsrc });
 			<div id="scroll-down" class="p-3 sm:p-4 px-10 sm:px-20 m-2 sm:m-4 cursor-pointer rounded-2xl text-sm sm:text-2xl outline-2 outline-black/50 hover:bg-black/3">
 				<slot name="button" />
 			</div>
-			<div class="mt-3 flex items-center justify-center gap-3">
+			<div class="flex items-center justify-center gap-3" transition:animate="none">
+				<div id="btn-left" class="rounded-2xl p-2 flex items-center cursor-pointer hover:bg-white/20">
+					<p class="text-3xl sm:text-5xl text-black/40">🞀</p>
+				</div>
 				{Object.entries(pages).map(([dotCategory, { path }]) => {
 					const isCurrent = path === Astro.url.pathname;
 
@@ -106,10 +106,10 @@ const bg = await getImage({ src: bgsrc });
 						/>
 					);
 				})}
+				<div id="btn-right" class="rounded-2xl p-2 flex items-center cursor-pointer hover:bg-white/20">
+					<p class="text-3xl sm:text-5xl text-black/40">🞂</p>
+				</div>
 			</div>
-		</div>
-		<div id="btn-right" class="rounded-2xl p-2 sm:p-4 flex items-center cursor-pointer my-8 hover:bg-white/20">
-			<p class="text-3xl sm:text-6xl text-black/60">⟩</p>
 		</div>
 	</div>
 </div>
