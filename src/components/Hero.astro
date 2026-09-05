@@ -33,10 +33,10 @@ const bg = await getImage({ src: bgsrc });
     ];
 	
 	document.addEventListener("astro:page-load", () => {
-		const currentPath = window.location.pathname;
-		const currentIndex = pageOrder.indexOf(currentPath);
-
+		
 		function right() {
+			const currentPath = window.location.pathname;
+			const currentIndex = pageOrder.indexOf(currentPath);
 			if (currentIndex < pageOrder.length - 1) {
 				navigate(pageOrder[currentIndex + 1]);
 			}
@@ -46,6 +46,8 @@ const bg = await getImage({ src: bgsrc });
 		}
 
 		function left() {
+			const currentPath = window.location.pathname;
+			const currentIndex = pageOrder.indexOf(currentPath);
 			if (currentIndex > 0) {
 				navigate(pageOrder[currentIndex - 1]);
 			}
@@ -59,6 +61,30 @@ const bg = await getImage({ src: bgsrc });
 			window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
 		});
 
+		let touchStartX = 0;
+		let touchStartY = 0;
+		document.addEventListener("touchstart", (event) => {
+			const touch = event.changedTouches[0];
+			if (touch) {
+				touchStartX = touch.clientX;
+				touchStartY = touch.clientY;
+			}
+		}, { passive: true });
+		document.addEventListener("touchend", (event) => {
+			const touch = event.changedTouches[0];
+			if (!touch) return;
+
+			const deltaX = touch.clientX - touchStartX;
+			const deltaY = touch.clientY - touchStartY;
+			if (Math.abs(deltaX) < 50 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+
+			if (deltaX < 0) {
+				right();
+			} else {
+				left();
+			}
+		}, { passive: true });
+
 		document.querySelectorAll(".category-dot").forEach((dot) => {
 			dot.addEventListener("click", () => {
 				const target = dot.getAttribute("data-path");
@@ -71,12 +97,14 @@ const bg = await getImage({ src: bgsrc });
 </script>
 
 <div
-	transition:animate="fade" transition:name="hero"
-	class=`h-lvh w-screen flex flex-col justify-center items-center ${page.color} fixed`
+	transition:animate="none" transition:name="hero"
+	class=`h-lvh w-screen ${page.color} fixed`
 >
+</div>
+<div class="h-lvh w-screen flex flex-col justify-center items-center fixed sm:static">
 	<div transition:animate="slide" transition:name="hero2" class="min-w-[88vw] sm:min-w-[70vw] min-h-[70vh] flex flex-row items-stretch justify-center rounded-2xl p-2 sm:p-6">
 		<div class="flex flex-col justify-center items-center">
-			<h1 transition:animate="fade" transition:name="hero3" class="text-center text-6xl sm:text-8xl m-2 sm:m-4 text-shadow-black/20 text-shadow-lg" style=`font-family: var(--font-${category});`>
+			<h1 transition:animate="fade" transition:name="hero3" class="text-center text-6xl sm:text-8xl m-4 sm:m-4 text-shadow-black/20 text-shadow-lg" style=`font-family: var(--font-${category});`>
 				Creative Space
 			</h1>
 			<div class="text-xl sm:text-4xl text-center">
@@ -85,7 +113,7 @@ const bg = await getImage({ src: bgsrc });
 			<div id="scroll-down" class="p-3 sm:p-4 px-10 sm:px-20 m-2 sm:m-4 cursor-pointer rounded-2xl text-sm sm:text-2xl outline-2 outline-black/50 hover:bg-black/3">
 				<slot name="button" />
 			</div>
-			<div class="flex items-center justify-center gap-3" transition:animate="none">
+			<div class="flex items-center justify-center gap-3" transition:animate="none" transition:name="hero4">
 				<div id="btn-left" class="p-1 flex items-center cursor-pointer">
 					<p class="text-2xl sm:text-4xl text-black/40 hover:text-black/60">
 						<svg viewBox="0 0 24 24" class="size-[1em]" fill="currentColor" aria-hidden="true">
@@ -95,7 +123,7 @@ const bg = await getImage({ src: bgsrc });
 				</div>
 				{Object.entries(pages).map(([dotCategory, { path }]) => {
 					const isCurrent = path === Astro.url.pathname;
-
+	
 					return (
 						<button
 							type="button"
@@ -119,5 +147,5 @@ const bg = await getImage({ src: bgsrc });
 				</div>
 			</div>
 		</div>
-	</div>
+</div>
 </div>

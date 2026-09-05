@@ -17,6 +17,9 @@
 ::view-transition-group(hero3) {
     z-index: 1;
 }
+::view-transition-group(hero4) {
+    z-index: 1;
+}
 
 ::view-transition-group(*) {
     z-index: 100;

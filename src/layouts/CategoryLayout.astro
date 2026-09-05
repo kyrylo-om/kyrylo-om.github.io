@@ -43,11 +43,11 @@ const page = pages[category];
 	document.addEventListener("astro:before-preparation", (event) => {
 		const pageOrder = [
 			"/",
-			"/videogames",
-			"/music",
-			"/code",
-			"/art",
-			"/texts",
+			"/videogames/",
+			"/music/",
+			"/code/",
+			"/art/",
+			"/texts/",
 		];
 
 		const currentPath = event.from.pathname;
@@ -82,16 +82,16 @@ const page = pages[category];
 >
 	<div class="flex flex-wrap justify-around items-center gap-x-2 sm:gap-x-0 text-base sm:text-2xl font-black">
 		<a href="/">Creative Space</a>
-		<a href="/videogames">Games</a>
-		<a href="/music">Music</a>
-		<a href="/code">Code</a>
-		<a href="/art">Art</a>
-		<a href="/texts">Texts</a>
+		<a href="/videogames/">Games</a>
+		<a href="/music/">Music</a>
+		<a href="/code/">Code</a>
+		<a href="/art/">Art</a>
+		<a href="/texts/">Texts</a>
 	</div>
 </header>
 <body>
 	<slot name="hero" />
-	<div class="h-lvh"></div>
+	<div class="h-lvh sm:hidden"></div>
 	<div
 		class="flex flex-col items-center"
 	>
