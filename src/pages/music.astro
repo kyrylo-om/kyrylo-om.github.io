@@ -20,7 +20,9 @@ const posts = await getCollection('music');
 		<p slot="title">Music</p>
         <div slot="content">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {posts.map((post) => (
+                {posts
+                .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+                .map((post) => (
                 <MusicCard data={post.data}>
                     <p slot="title">{post.data.title}</p>
                 </MusicCard>

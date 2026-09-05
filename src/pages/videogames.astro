@@ -20,7 +20,7 @@ const posts = await getCollection('games');
 		<p slot="title">Videogames</p>
         <div slot="content">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {posts.map((post) => (
+                {posts.sort((a, b) => a.data.order - b.data.order).map((post) => (
                 <GameCard data={post.data}>
                     <p slot="title">{post.data.title}</p>
                 </GameCard>

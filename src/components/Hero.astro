@@ -33,6 +33,11 @@ const bg = await getImage({ src: bgsrc });
     ];
 	
 	document.addEventListener("astro:page-load", () => {
+		const hint = document.getElementById("swipehint")
+		const swipeHintDismissed = "swipeHintDismissed"
+		if (localStorage.getItem(swipeHintDismissed) === "true") {
+			hint?.classList.add("hidden")
+		}
 		
 		function right() {
 			const currentPath = window.location.pathname;
@@ -83,6 +88,8 @@ const bg = await getImage({ src: bgsrc });
 			} else {
 				left();
 			}
+			localStorage.setItem(swipeHintDismissed, "true")
+			hint?.classList.add("hidden")
 		}, { passive: true });
 
 		document.querySelectorAll(".category-dot").forEach((dot) => {
@@ -146,6 +153,7 @@ const bg = await getImage({ src: bgsrc });
 					</p>
 				</div>
 			</div>
+			<p class="hidden" id="swipehint">Try swiping!</p>
 		</div>
 </div>
 </div>

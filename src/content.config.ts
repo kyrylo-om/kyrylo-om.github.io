@@ -8,6 +8,7 @@ const games = defineCollection({
     title: z.string(),
     thumbnail: image(),
     url: z.string(),
+    order: z.int()
   }),
 });
 
@@ -15,8 +16,9 @@ const music = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "src/content/music" }),
   schema: ({image}) => z.object({
     title: z.string(),
-    audio: z.string().optional(),
-    thumbnail: image()
+    audio: z.string(),
+    thumbnail: image(),
+    date: z.coerce.date(),
   }),
 });
 
