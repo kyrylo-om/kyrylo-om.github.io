@@ -23,7 +23,7 @@ const formattedDate = new Date(data.date).toLocaleDateString(undefined, {
                     alt=""
                     class="object-cover object-center size-full rounded-xl"
                 />
-                <div class="absolute inset-0 object-cover object-center size-full bg-black/20 rounded-xl"></div>
+                <div class="absolute inset-0 object-cover object-center size-full bg-black/10 rounded-xl"></div>
                 <div class="absolute inset-0 flex items-center justify-center">
                     <button
                         type="button"
@@ -47,12 +47,13 @@ const formattedDate = new Date(data.date).toLocaleDateString(undefined, {
                     <h3 class="text-xl font-bold">{data.title}</h3>
                 </div>
                 <div class="waveform-container grow cursor-pointer flex flex-col justify-center"></div>
-                <div class="flex">
-                    <span class="time-display text-neutral-600 text-l"
+                <div class="flex flex-col sm:flex-row">
+                    <span class="time-display text-neutral-600 text-l truncate"
                         >0:00 / 0:00</span
                     >
-                    <span class="text-neutral-600 text-l">
-                        &nbsp;• {formattedDate}
+                    <span class="text-neutral-600 text-l hidden sm:block">&nbsp;•&nbsp;</span>
+                    <span class="text-neutral-600 text-l truncate">
+                        {formattedDate}
                     </span>
                 </div>
             </div>
@@ -68,6 +69,8 @@ const formattedDate = new Date(data.date).toLocaleDateString(undefined, {
 		const remainingSeconds = Math.floor(seconds % 60);
 		return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 	};
+
+    const players = new Map<HTMLElement, WaveSurfer>();
 
     document.addEventListener("astro:page-load", () => {
         document
@@ -100,13 +103,20 @@ const formattedDate = new Date(data.date).toLocaleDateString(undefined, {
                     url: audioUrl,
                 });
 
+				players.set(container, ws);
+
                 const updatePlayState = (isPlaying: boolean) => {
                     playIcon?.classList.toggle("hidden", isPlaying);
                     pauseIcon?.classList.toggle("hidden", !isPlaying);
                 };
 
                 playBtn.addEventListener("click", () => ws.playPause());
-                ws.on("play", () => updatePlayState(true));
+                ws.on("play", () => {
+                    players.forEach((otherPlayer, otherContainer) => {
+                        if (otherContainer !== container) otherPlayer.pause();
+                    });
+                    updatePlayState(true);
+                });
                 ws.on("pause", () => updatePlayState(false));
                 ws.on("finish", () => updatePlayState(false));
 
