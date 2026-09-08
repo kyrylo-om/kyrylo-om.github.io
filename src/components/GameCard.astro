@@ -17,11 +17,13 @@ const { data } = Astro.props
 </div>
 
 <script>
-    document.querySelectorAll<HTMLElement>('[data-game-card]').forEach((card) => {
-        card.addEventListener('click', () => {
-            const url = card.dataset.url
+    document.addEventListener("astro:page-load", () => {
+        document.querySelectorAll<HTMLElement>('[data-game-card]').forEach((card) => {
+            card.addEventListener('click', () => {
+                const url = card.dataset.url
 
-            if (url) window.open(url, '_blank', 'noopener,noreferrer')
+                if (url) window.open(url, '_blank', 'noopener,noreferrer')
+            })
         })
     })
 </script>
