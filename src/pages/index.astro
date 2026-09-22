@@ -2,8 +2,10 @@
 import Hero from '../components/Hero.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CategoryLayout from '../layouts/CategoryLayout.astro';
+import { Image } from 'astro:assets'
 
 import '../styles/global.css'
+import image from "../assets/images/kyrylo2.jpg"
 ---
 
 <script>
@@ -29,9 +31,61 @@ myTimeline
             <p slot="subtitle">So, uh... I like a lot of things.</p>
             <p slot="button">Hi there!</p>
         </Hero>
-        <p slot="title">Hello.</p>
+        <p slot="title">Hello, I'm Kyrylo!</p>
         <div slot="content" class="flex flex-col items-center">
-            Here should be something about me but I'm currently a bit busy with other things. You should definitely check out the other pages here though!
+            <div class="flex flex-col items-center">
+                <Image 
+                    src={image}
+                    alt=""
+                    class="object-cover object-center w-140 rounded-4xl border-5 border-yellow-500"
+                />
+                <p class="pt-10 text-xl sm:text-2xl text-center">
+                    A somebody who's obsessed with indie games and animation. 
+                    Art inspires me to make art! 
+                    I hope that someday I can return at least a fraction of the creativity and inspiration 
+                    that the world has gifted me.
+                    By the way, that's my cat on the photo, Mila!
+                </p>
+            </div>
+
+            <p class="text-3xl sm:text-5xl font-black pt-50 pb-4 text-center">Videogames I love</p>
+            <ul class="text-l sm:text-xl text-center text-gray-600">
+                <li>Undertale</li>
+                <li>Deltarune</li>
+                <li>Subnautica</li>
+                <li>Subnautica Below Zero</li>
+                <li>Hollow Knight</li>
+                <li>Hollow Knight: Silksong</li>
+                <li>Ori and The Blind Forest</li>
+                <li>Ori and The Will Of The Wisps</li>
+                <li>Portal 2</li>
+                <li>FNAF: Security Breach</li>
+                <li>Death's Door</li>
+                <li>Outer Wilds</li>
+                <li>Celeste</li>
+                <li>Horizon Zero Dawn</li>
+                <li>Horizon Forbidden West</li>
+                <li>Night in the Woods</li>
+                <li>OneShot</li>
+                <li>Stray</li>
+                <li>TUNIC</li>
+                <li>Rain World</li>
+                <li>A Hat in Time</li>
+                <li>The Talos Principle 1 & 2</li>
+                <li>Poppy Playtime</li>
+                <li>Chicory: a Colorful Tale</li>
+                <li>Clair Obscure: Expedition 33</li>
+            </ul>
+
+            <p class="text-3xl sm:text-5xl font-black pt-10 pb-4 text-center">Shows I love</p>
+            <ul class="text-l sm:text-xl text-center text-gray-600">
+                <li>Murder Drones</li>
+                <li>The Amazing Digital Circus</li>
+                <li>Hazbin Hotel</li>
+                <li>Yeah, not a lot, I know... I'm only getting into this!</li>
+            </ul>
+
+            <p class="text-2xl pt-50">More to come...</p>
         </div>
     </CategoryLayout>
 </BaseLayout>
